@@ -1,9 +1,9 @@
 import {Either, left, right, isLeft, fold} from "fp-ts/Either";
-import {KleisliEither, of as kleisliEitherOf} from "../core/KleisliEither";
 
 export type DecodeError = {
   message: string
 }
+
 export type DecodeErrorWithValue<A> = DecodeError & {
   value: A
 }
@@ -20,7 +20,6 @@ export const invalid: <A>(_: string) => Either<DecodeError, A> =
 
 export const of: <I, O>(_: (i: I) => Either<DecodeError, O>) => Decoder<I, O> =
   f => {
-    const ke = kleisliEitherOf(f)
 
     return {
       run: i => {
